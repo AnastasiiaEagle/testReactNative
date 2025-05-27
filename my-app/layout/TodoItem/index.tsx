@@ -1,5 +1,5 @@
 import StyleText from "@/components/StyledText"
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { COLORS } from "@/constants/ui";
 
 type TodoItemProps = {
@@ -11,7 +11,7 @@ type TodoItemProps = {
 const TodoItem: React.FC<TodoItemProps> = ({title, isCompleted, onPress}) => {
 return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-        <StyleText>{title}</StyleText>
+        <StyleText style={{textDecorationLine: isCompleted ? "line-through" : "none"}}>{title}</StyleText>
         <StyleText>{isCompleted ? "✅" : "❌"}</StyleText>
     </TouchableOpacity>
     )
