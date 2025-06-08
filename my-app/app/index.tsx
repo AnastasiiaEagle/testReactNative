@@ -1,52 +1,25 @@
-import Header from "@/layout/Header";
-import { StatusBar, StyleSheet, View } from "react-native";
-import { Stack } from "expo-router";
-import { useState } from "react";
-import { Todo } from "@/types/todo";
-import TodoList from "@/layout/TodoList";
+import HomeScreen from "@/src/screens/HomeScreen";
+import { NavigationContainer } from "@react-navigation/native";
+import TestScreen from "@/src/screens/TestScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const defaultTodo: Todo[] = [
-  {
-    id: "1",
-    title: "Завдання 1",
-    isCompleted: false,
-  },
-  {
-    id: "2",
-    title: "Завдання 2",
-    isCompleted: false,
-  },
-  {
-    id: "3",
-    title: "Завдання 3",
-    isCompleted: false,
-  },
-];
+const Stack = createNativeStackNavigator();
 
 export default function Index() {
-  const [todo, setTodo] = useState<Todo[]>(defaultTodo);
-
-  const toggleTodo = (id: string) => {
-    setTodo(prevTodos => 
-      prevTodos.map(todo => 
-        todo.id === id ? { ...todo, isCompleted: !todo.isCompleted } : todo
-      )
-    );
-  };
-
-  return (
-    <View style={styles.container}>
-      <Stack.Screen options={{ headerShown: false }} />
-      <StatusBar barStyle={"light-content"} />
-      <Header totalTodos={todo.length} completedTodos={todo.filter((todo) => todo.isCompleted).length} />
-      <TodoList todos={todo} onToggle={toggleTodo} />
-    </View>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="index">
+                <Stack.Screen 
+                    name="index" 
+                    component={HomeScreen}
+                    options={{ headerShown: false }} 
+                />
+                <Stack.Screen 
+                    name="test" 
+                    component={TestScreen}
+                    options={{ headerShown: true }} 
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#404040",
-  },
-});
